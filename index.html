@@ -1,0 +1,465 @@
+<div class="jd-proof-section" dir="rtl">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap');
+
+    .jd-proof-section{
+      --gold:#d7b85a;
+      --gold2:#f2de9a;
+      --text:#f7f3ea;
+      --muted:#cfc7b4;
+      font-family:'Cairo',Tahoma,Arial,sans-serif;
+      background:
+        radial-gradient(circle at top, rgba(215,184,90,.12), transparent 30%),
+        radial-gradient(circle at bottom, rgba(215,184,90,.08), transparent 35%),
+        linear-gradient(180deg, #020202 0%, #090909 100%);
+      color:var(--text);
+      padding:40px 16px 50px;
+    }
+    .jd-proof-section *{ box-sizing:border-box; }
+
+    .jd-proof-wrap{ max-width:1280px; margin:0 auto; }
+
+    /* ===== الشعار واسم المتجر ===== */
+    .jd-brand-hero{
+      text-align:center;
+      padding:34px 18px 28px;
+      border:1px solid rgba(215,184,90,.14);
+      border-radius:34px;
+      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+      box-shadow:0 20px 50px rgba(0,0,0,.28);
+      margin-bottom:26px;
+      overflow:hidden;
+      position:relative;
+    }
+    .jd-brand-hero:before,
+    .jd-brand-hero:after{
+      content:"";
+      position:absolute;
+      width:240px; height:240px;
+      border-radius:50%;
+      filter:blur(30px);
+      opacity:.16;
+      pointer-events:none;
+    }
+    .jd-brand-hero:before{ top:-120px; left:-70px; background:rgba(215,184,90,.8); }
+    .jd-brand-hero:after{ bottom:-120px; right:-70px; background:rgba(255,255,255,.25); }
+
+    .jd-brand-logo{
+      width:140px; height:140px;
+      margin:0 auto 14px;
+      border-radius:28px;
+      padding:14px;
+      display:grid;
+      place-items:center;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(215,184,90,.18);
+      box-shadow:0 16px 36px rgba(0,0,0,.3);
+      position:relative;
+      z-index:1;
+    }
+    .jd-brand-logo img{ width:100%; height:100%; object-fit:contain; display:block; }
+
+    .jd-brand-hero h1{
+      margin:0;
+      font-size:clamp(2rem, 4vw, 3.6rem);
+      font-weight:800;
+      color:var(--text);
+      line-height:1.2;
+      position:relative; z-index:1;
+    }
+    .jd-brand-hero .en{
+      display:block;
+      margin-top:10px;
+      color:var(--gold);
+      letter-spacing:.22em;
+      font-size:.9rem;
+      font-weight:700;
+      position:relative; z-index:1;
+    }
+    .jd-brand-hero p{
+      margin:12px auto 0;
+      max-width:850px;
+      color:var(--muted);
+      line-height:2;
+      font-size:1rem;
+      position:relative; z-index:1;
+    }
+
+    /* ===== التبويبات (CSS فقط) ===== */
+    .jd-radio{
+      position:absolute;
+      opacity:0;
+      pointer-events:none;
+      width:0; height:0;
+    }
+
+    .jd-tabs-nav{
+      display:flex;
+      justify-content:center;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-bottom:24px;
+    }
+
+    .jd-tab-btn{
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      min-width:240px;
+      padding:16px 26px;
+      border-radius:999px;
+      font-weight:800;
+      font-size:1.1rem;
+      color:#fff;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(215,184,90,.28);
+      transition:.25s ease;
+      user-select:none;
+    }
+    .jd-tab-btn:hover{
+      transform:translateY(-2px);
+      background:rgba(215,184,90,.10);
+      border-color:rgba(215,184,90,.5);
+    }
+    .jd-tab-btn .count{
+      background:rgba(215,184,90,.18);
+      color:var(--gold2);
+      border-radius:999px;
+      padding:2px 12px;
+      font-size:.85rem;
+      font-weight:700;
+    }
+
+    #jd-tab-reviews:checked ~ .jd-tabs-nav label[for="jd-tab-reviews"],
+    #jd-tab-ba:checked ~ .jd-tabs-nav label[for="jd-tab-ba"]{
+      background:linear-gradient(135deg, var(--gold), var(--gold2));
+      color:#111;
+      border-color:transparent;
+      box-shadow:0 12px 28px rgba(215,184,90,.28);
+    }
+    #jd-tab-reviews:checked ~ .jd-tabs-nav label[for="jd-tab-reviews"] .count,
+    #jd-tab-ba:checked ~ .jd-tabs-nav label[for="jd-tab-ba"] .count{
+      background:rgba(0,0,0,.15);
+      color:#111;
+    }
+
+    /* ===== الأقسام ===== */
+    .jd-panel{ display:none; }
+    #jd-tab-reviews:checked ~ .jd-panels .jd-panel-reviews{ display:block; animation:jdFade .45s ease; }
+    #jd-tab-ba:checked ~ .jd-panels .jd-panel-ba{ display:block; animation:jdFade .45s ease; }
+
+    @keyframes jdFade{
+      from{ opacity:0; transform:translateY(14px); }
+      to{ opacity:1; transform:translateY(0); }
+    }
+
+    .jd-proof-block{
+      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+      border:1px solid rgba(215,184,90,.14);
+      border-radius:30px;
+      padding:22px;
+      box-shadow:0 20px 50px rgba(0,0,0,.28);
+    }
+
+    .jd-block-title{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      margin-bottom:18px;
+      flex-wrap:wrap;
+    }
+    .jd-block-title h2{ margin:0; font-size:1.4rem; color:#fff; font-weight:800; }
+    .jd-block-title span{ color:var(--gold); font-weight:700; font-size:.92rem; }
+
+    .jd-gallery-grid{
+      display:grid;
+      grid-template-columns:repeat(4, minmax(0, 1fr));
+      gap:14px;
+    }
+
+    .jd-gallery-item{
+      position:relative;
+      overflow:hidden;
+      border-radius:18px;
+      border:1px solid rgba(215,184,90,.16);
+      background:#0b0b0b;
+      box-shadow:0 10px 24px rgba(0,0,0,.22);
+      cursor:zoom-in;
+      transition:.3s ease;
+    }
+    .jd-gallery-item:hover{
+      transform:translateY(-4px);
+      border-color:rgba(215,184,90,.55);
+      box-shadow:0 16px 34px rgba(215,184,90,.18);
+    }
+    .jd-gallery-item img{
+      width:100%;
+      height:100%;
+      display:block;
+      object-fit:contain;
+      background:#0b0b0b;
+    }
+    .jd-panel-reviews .jd-gallery-item{ aspect-ratio:3 / 4; }
+    .jd-panel-ba .jd-gallery-item{ aspect-ratio:1 / 1; }
+
+    .jd-gallery-item:after{
+      content:"⤢";
+      position:absolute;
+      bottom:10px; left:10px;
+      width:34px; height:34px;
+      display:grid; place-items:center;
+      border-radius:50%;
+      background:rgba(0,0,0,.65);
+      color:var(--gold2);
+      border:1px solid rgba(215,184,90,.35);
+      font-size:1rem;
+      opacity:0;
+      transition:.25s ease;
+      pointer-events:none;
+    }
+    .jd-gallery-item:hover:after{ opacity:1; }
+
+    /* ===== التكبير ===== */
+    .jd-lightbox{
+      position:fixed;
+      inset:0;
+      z-index:999999;
+      background:rgba(0,0,0,.93);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+      direction:ltr;
+    }
+    .jd-lightbox.open{ display:flex; }
+    .jd-lightbox img{
+      max-width:92vw;
+      max-height:86vh;
+      border-radius:14px;
+      border:1px solid rgba(215,184,90,.3);
+      box-shadow:0 20px 60px rgba(0,0,0,.6);
+      object-fit:contain;
+    }
+    .jd-lb-btn{
+      position:absolute;
+      width:48px; height:48px;
+      border-radius:50%;
+      border:1px solid rgba(215,184,90,.45);
+      background:rgba(20,20,20,.85);
+      color:#f2de9a;
+      font-size:1.8rem;
+      line-height:1;
+      cursor:pointer;
+      display:grid; place-items:center;
+      transition:.2s ease;
+      font-family:Arial,sans-serif;
+    }
+    .jd-lb-btn:hover{ background:#d7b85a; color:#111; }
+    .jd-lb-close{ top:18px; right:18px; }
+    .jd-lb-prev{ left:18px; top:50%; transform:translateY(-50%); }
+    .jd-lb-next{ right:18px; top:50%; transform:translateY(-50%); }
+    .jd-lb-count{
+      position:absolute;
+      bottom:18px; left:50%;
+      transform:translateX(-50%);
+      color:#f2de9a;
+      font-family:'Cairo',Arial,sans-serif;
+      font-weight:700;
+      background:rgba(0,0,0,.6);
+      padding:6px 16px;
+      border-radius:999px;
+      border:1px solid rgba(215,184,90,.3);
+    }
+
+    /* ===== الجوال ===== */
+    @media (max-width: 1100px){
+      .jd-gallery-grid{ grid-template-columns:repeat(3, minmax(0, 1fr)); }
+    }
+    @media (max-width: 760px){
+      .jd-gallery-grid{ grid-template-columns:repeat(2, minmax(0, 1fr)); gap:10px; }
+      .jd-brand-logo{ width:120px; height:120px; }
+      .jd-tab-btn{ min-width:100%; }
+      .jd-proof-block{ padding:14px; }
+    }
+  </style>
+
+  <div class="jd-proof-wrap">
+
+    <!-- الشعار واسم المتجر -->
+    <section class="jd-brand-hero">
+      <div class="jd-brand-logo">
+        <!-- ضع رابط الشعار هنا -->
+        <img src="ضع_رابط_الشعار_هنا" alt="شعار جمال الظبي">
+      </div>
+      <h1>جمال الظبي</h1>
+      <span class="en">JMAAL AL-DHABI</span>
+      <p>
+        شاهد تجارب عملائنا الحقيقية ونتائج قبل وبعد. اختر القسم الذي تريده لعرض الصور.
+      </p>
+    </section>
+
+    <!-- أزرار التبويبات -->
+    <input type="radio" name="jd-tabs" id="jd-tab-reviews" class="jd-radio" checked>
+    <input type="radio" name="jd-tabs" id="jd-tab-ba" class="jd-radio">
+
+    <div class="jd-tabs-nav">
+      <label for="jd-tab-reviews" class="jd-tab-btn">
+        💬 آراء العملاء <span class="count">24</span>
+      </label>
+      <label for="jd-tab-ba" class="jd-tab-btn">
+        ✨ قبل وبعد <span class="count">24</span>
+      </label>
+    </div>
+
+    <div class="jd-panels">
+
+      <!-- ========== قسم آراء العملاء ========== -->
+      <section class="jd-panel jd-panel-reviews">
+        <div class="jd-proof-block">
+          <div class="jd-block-title">
+            <h2>آراء العملاء</h2>
+            <span>اضغط على أي صورة لتكبيرها</span>
+          </div>
+
+          <div class="jd-gallery-grid">
+            <!-- السطر 1 -->
+            <div class="jd-gallery-item"><img src="YOUR_REVIEW_IMAGE_01_URL" alt="رأي عميل 1" loading="lazy"></div>
+            <div class="jd-gallery-item"><img src="YOUR_REVIEW_IMAGE_02_URL" alt="رأي عميل 2" loading="lazy"></div>
+            <div class="jd-gallery-item"><img src="YOUR_REVIEW_IMAGE_03_URL" alt="رأي عميل 3" loading="lazy"></div>
+            <div class="jd-gallery-item"><img src="YOUR_REVIEW_IMAGE_04_URL" alt="رأي عميل 4" loading="lazy"></div>
+            <!-- السطر 2 -->
+            <div class="jd-gallery-item"><img src="YOUR_REVIEW_IMAGE_05_URL" alt="رأي عميل 5" loading="lazy"></div>
+            <div class="jd-gallery-item"><img src="YOUR_REVIEW_IMAGE_06_URL" alt="رأي عميل 6" loading="lazy"></div>
+            <div class="jd-gallery-item"><img src="YOUR_REVIEW_IMAGE_07_URL" alt="رأي عميل 7" loading="lazy"></div>
+            <div class="jd-gallery-item"><img src="YOUR_REVIEW_IMAGE_08_URL" alt="رأي عميل 8" loading="lazy"></div>
+            <!-- السطر 3 -->
+            <div class="jd-gallery-item"><img src="YOUR_REVIEW_IMAGE_09_URL" alt="رأي عميل 9" loading="lazy"></div>
+            <div class="jd-gallery-item"><img src="YOUR_REVIEW_IMAGE_10_URL" alt="رأي عميل 10" loading="lazy"></div>
+            <div class="jd-gallery-item"><img src="YOUR_REVIEW_IMAGE_11_URL" alt="رأي عميل 11" loading="lazy"></div>
+            <div class="jd-gallery-item"><img src="YOUR_REVIEW_IMAGE_12_URL" alt="رأي عميل 12" loading="lazy"></div>
+            <!-- السطر 4 -->
+            <div class="jd-gallery-item"><img src="YOUR_REVIEW_IMAGE_13_URL" alt="رأي عميل 13" loading="lazy"></div>
+            <div class="jd-gallery-item"><img src="YOUR_REVIEW_IMAGE_14_URL" alt="رأي عميل 14" loading="lazy"></div>
+            <div class="jd-gallery-item"><img src="YOUR_REVIEW_IMAGE_15_URL" alt="رأي عميل 15" loading="lazy"></div>
+            <div class="jd-gallery-item"><img src="YOUR_REVIEW_IMAGE_16_URL" alt="رأي عميل 16" loading="lazy"></div>
+            <!-- السطر 5 -->
+            <div class="jd-gallery-item"><img src="YOUR_REVIEW_IMAGE_17_URL" alt="رأي عميل 17" loading="lazy"></div>
+            <div class="jd-gallery-item"><img src="YOUR_REVIEW_IMAGE_18_URL" alt="رأي عميل 18" loading="lazy"></div>
+            <div class="jd-gallery-item"><img src="YOUR_REVIEW_IMAGE_19_URL" alt="رأي عميل 19" loading="lazy"></div>
+            <div class="jd-gallery-item"><img src="YOUR_REVIEW_IMAGE_20_URL" alt="رأي عميل 20" loading="lazy"></div>
+            <!-- السطر 6 -->
+            <div class="jd-gallery-item"><img src="YOUR_REVIEW_IMAGE_21_URL" alt="رأي عميل 21" loading="lazy"></div>
+            <div class="jd-gallery-item"><img src="YOUR_REVIEW_IMAGE_22_URL" alt="رأي عميل 22" loading="lazy"></div>
+            <div class="jd-gallery-item"><img src="YOUR_REVIEW_IMAGE_23_URL" alt="رأي عميل 23" loading="lazy"></div>
+            <div class="jd-gallery-item"><img src="YOUR_REVIEW_IMAGE_24_URL" alt="رأي عميل 24" loading="lazy"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== قسم قبل وبعد ========== -->
+      <section class="jd-panel jd-panel-ba">
+        <div class="jd-proof-block">
+          <div class="jd-block-title">
+            <h2>قبل وبعد</h2>
+            <span>اضغط على أي صورة لتكبيرها</span>
+          </div>
+
+          <div class="jd-gallery-grid">
+            <!-- السطر 1 -->
+            <div class="jd-gallery-item"><img src="YOUR_BA_IMAGE_01_URL" alt="قبل وبعد 1" loading="lazy"></div>
+            <div class="jd-gallery-item"><img src="YOUR_BA_IMAGE_02_URL" alt="قبل وبعد 2" loading="lazy"></div>
+            <div class="jd-gallery-item"><img src="YOUR_BA_IMAGE_03_URL" alt="قبل وبعد 3" loading="lazy"></div>
+            <div class="jd-gallery-item"><img src="YOUR_BA_IMAGE_04_URL" alt="قبل وبعد 4" loading="lazy"></div>
+            <!-- السطر 2 -->
+            <div class="jd-gallery-item"><img src="YOUR_BA_IMAGE_05_URL" alt="قبل وبعد 5" loading="lazy"></div>
+            <div class="jd-gallery-item"><img src="YOUR_BA_IMAGE_06_URL" alt="قبل وبعد 6" loading="lazy"></div>
+            <div class="jd-gallery-item"><img src="YOUR_BA_IMAGE_07_URL" alt="قبل وبعد 7" loading="lazy"></div>
+            <div class="jd-gallery-item"><img src="YOUR_BA_IMAGE_08_URL" alt="قبل وبعد 8" loading="lazy"></div>
+            <!-- السطر 3 -->
+            <div class="jd-gallery-item"><img src="YOUR_BA_IMAGE_09_URL" alt="قبل وبعد 9" loading="lazy"></div>
+            <div class="jd-gallery-item"><img src="YOUR_BA_IMAGE_10_URL" alt="قبل وبعد 10" loading="lazy"></div>
+            <div class="jd-gallery-item"><img src="YOUR_BA_IMAGE_11_URL" alt="قبل وبعد 11" loading="lazy"></div>
+            <div class="jd-gallery-item"><img src="YOUR_BA_IMAGE_12_URL" alt="قبل وبعد 12" loading="lazy"></div>
+            <!-- السطر 4 -->
+            <div class="jd-gallery-item"><img src="YOUR_BA_IMAGE_13_URL" alt="قبل وبعد 13" loading="lazy"></div>
+            <div class="jd-gallery-item"><img src="YOUR_BA_IMAGE_14_URL" alt="قبل وبعد 14" loading="lazy"></div>
+            <div class="jd-gallery-item"><img src="YOUR_BA_IMAGE_15_URL" alt="قبل وبعد 15" loading="lazy"></div>
+            <div class="jd-gallery-item"><img src="YOUR_BA_IMAGE_16_URL" alt="قبل وبعد 16" loading="lazy"></div>
+            <!-- السطر 5 -->
+            <div class="jd-gallery-item"><img src="YOUR_BA_IMAGE_17_URL" alt="قبل وبعد 17" loading="lazy"></div>
+            <div class="jd-gallery-item"><img src="YOUR_BA_IMAGE_18_URL" alt="قبل وبعد 18" loading="lazy"></div>
+            <div class="jd-gallery-item"><img src="YOUR_BA_IMAGE_19_URL" alt="قبل وبعد 19" loading="lazy"></div>
+            <div class="jd-gallery-item"><img src="YOUR_BA_IMAGE_20_URL" alt="قبل وبعد 20" loading="lazy"></div>
+            <!-- السطر 6 -->
+            <div class="jd-gallery-item"><img src="YOUR_BA_IMAGE_21_URL" alt="قبل وبعد 21" loading="lazy"></div>
+            <div class="jd-gallery-item"><img src="YOUR_BA_IMAGE_22_URL" alt="قبل وبعد 22" loading="lazy"></div>
+            <div class="jd-gallery-item"><img src="YOUR_BA_IMAGE_23_URL" alt="قبل وبعد 23" loading="lazy"></div>
+            <div class="jd-gallery-item"><img src="YOUR_BA_IMAGE_24_URL" alt="قبل وبعد 24" loading="lazy"></div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <!-- تكبير الصور -->
+  <script>
+    (function(){
+      var root = document.querySelector('.jd-proof-section');
+      if(!root) return;
+
+      var box = document.createElement('div');
+      box.className = 'jd-lightbox';
+      box.innerHTML =
+        '<button class="jd-lb-btn jd-lb-close" aria-label="إغلاق">&times;</button>' +
+        '<button class="jd-lb-btn jd-lb-prev" aria-label="السابق">&#8249;</button>' +
+        '<img alt="">' +
+        '<button class="jd-lb-btn jd-lb-next" aria-label="التالي">&#8250;</button>' +
+        '<div class="jd-lb-count"></div>';
+      document.body.appendChild(box);
+
+      var big = box.querySelector('img');
+      var counter = box.querySelector('.jd-lb-count');
+      var list = [], idx = 0;
+
+      function show(i){
+        idx = i;
+        big.src = list[i].src;
+        big.alt = list[i].alt || '';
+        counter.textContent = (i + 1) + ' / ' + list.length;
+        box.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+      function hide(){
+        box.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+      function step(d){
+        show((idx + d + list.length) % list.length);
+      }
+
+      root.addEventListener('click', function(e){
+        var img = e.target.closest ? e.target.closest('.jd-gallery-item img') : null;
+        if(!img) return;
+        var grid = img.closest('.jd-gallery-grid');
+        list = [].slice.call(grid.querySelectorAll('img'));
+        show(list.indexOf(img));
+      });
+
+      box.querySelector('.jd-lb-close').addEventListener('click', hide);
+      box.querySelector('.jd-lb-prev').addEventListener('click', function(e){ e.stopPropagation(); step(-1); });
+      box.querySelector('.jd-lb-next').addEventListener('click', function(e){ e.stopPropagation(); step(1); });
+      box.addEventListener('click', function(e){ if(e.target === box) hide(); });
+
+      document.addEventListener('keydown', function(e){
+        if(!box.classList.contains('open')) return;
+        if(e.key === 'Escape') hide();
+        if(e.key === 'ArrowLeft') step(-1);
+        if(e.key === 'ArrowRight') step(1);
+      });
+    })();
+  </script>
+</div>
